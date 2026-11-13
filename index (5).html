@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHERRY DENTAL DESIGN LIMITED | Clinical CAD & Software Solutions</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        cherry: {
+                            bg: '#0a0a0b', /* Deep slate/black */
+                            card: '#121214', /* Slightly elevated card */
+                            border: '#27272a',
+                            accent: '#e11d48', /* Cherry Red / Rose 600 */
+                            accent2: '#be123c', /* Deep Cherry / Rose 700 */
+                            textMuted: '#a1a1aa',
+                            textWhite: '#fafafa'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0a0a0b;
+            color: #fafafa;
+        }
+        /* Clinical/Tech Grid Background */
+        .bg-mesh {
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(225, 29, 72, 0.08) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(190, 18, 60, 0.05) 0px, transparent 50%);
+            background-attachment: fixed;
+        }
+        .spa-view {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .spa-view.active {
+            display: block;
+            opacity: 1;
+        }
+        .form-input {
+            width: 100%;
+            padding: 0.875rem 1.25rem;
+            border-radius: 0.5rem;
+            border: 1px solid #27272a;
+            background-color: #0a0a0b;
+            color: #fafafa;
+            transition: all 0.2s;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: #e11d48;
+            box-shadow: 0 0 0 2px rgba(225, 29, 72, 0.2);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #e11d48, #fb7185);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col bg-mesh relative">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-cherry-bg/85 backdrop-blur-xl border-b border-cherry-border">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <a href="#home" class="flex items-center group relative z-10">
+                    <div class="w-10 h-10 border border-cherry-accent/30 bg-gradient-to-br from-cherry-accent/20 to-cherry-accent2/20 rounded-lg flex items-center justify-center mr-3 group-hover:scale-105 transition-transform shadow-[0_0_15px_rgba(225,29,72,0.15)]">
+                        <svg class="w-5 h-5 text-cherry-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                    </div>
+                    <span class="font-display font-bold text-xl tracking-wide text-cherry-textWhite uppercase mt-0.5">Cherry Dental</span>
+                </a>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8 relative z-10">
+                    <a href="#home" class="text-sm font-semibold text-cherry-textMuted hover:text-cherry-textWhite uppercase tracking-widest transition-colors">Platform</a>
+                    <a href="#support" class="text-sm font-semibold text-cherry-textMuted hover:text-cherry-textWhite uppercase tracking-widest transition-colors">Support</a>
+                    <a href="#support" class="px-5 py-2.5 rounded-lg bg-cherry-textWhite text-cherry-bg text-sm font-bold uppercase tracking-widest hover:bg-cherry-accent hover:text-white transition-colors">
+                        Connect
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center relative z-10">
+                    <button id="mobileMenuBtn" class="text-cherry-textMuted hover:text-white transition-colors">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 7h16M4 12h16M4 17h16"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobileMenu" class="hidden md:hidden bg-cherry-card border-b border-cherry-border relative z-10 shadow-2xl">
+            <div class="px-4 pt-2 pb-4 space-y-1">
+                <a href="#home" class="block px-4 py-3 text-sm font-semibold text-cherry-textMuted hover:text-white uppercase tracking-widest border-b border-cherry-border/50">Platform</a>
+                <a href="#support" class="block px-4 py-3 text-sm font-semibold text-cherry-textMuted hover:text-white uppercase tracking-widest border-b border-cherry-border/50">Support</a>
+                <a href="#privacy" class="block px-4 py-3 text-sm font-semibold text-cherry-textMuted hover:text-white uppercase tracking-widest">Privacy Policy</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow pt-20 relative z-10">
+        
+        <!-- ==================== HOME VIEW ==================== -->
+        <div id="view-home" class="spa-view active">
+            <!-- Hero -->
+            <section class="py-24 lg:py-32 px-6">
+                <div class="max-w-5xl mx-auto text-center">
+                    <div class="inline-flex items-center px-5 py-1.5 rounded-full border border-cherry-accent/40 bg-cherry-accent/10 text-cherry-accent text-xs font-bold tracking-widest uppercase mb-8 shadow-[0_0_15px_rgba(225,29,72,0.1)]">
+                        Nottingham • Clinical Tech
+                    </div>
+                    <h1 class="font-display font-extrabold text-5xl md:text-7xl lg:text-8xl text-white leading-tight mb-8">
+                        Precision Dental <br/>
+                        <span class="text-gradient">CAD Solutions.</span>
+                    </h1>
+                    <p class="text-lg md:text-xl text-cherry-textMuted max-w-2xl mx-auto font-light leading-relaxed">
+                        CHERRY DENTAL DESIGN LIMITED engineers high-performance 3D modeling tools and intraoral synchronization applications specifically tailored for the iOS and iPadOS ecosystem.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Projects -->
+            <section class="py-20 px-6 border-t border-cherry-border bg-cherry-bg/50 backdrop-blur-sm">
+                <div class="max-w-7xl mx-auto">
+                    <div class="mb-16">
+                        <h2 class="font-display text-4xl font-bold text-white mb-3">Enterprise Pipeline</h2>
+                        <p class="text-cherry-textMuted text-lg">Proprietary B2B software solutions currently in production.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- App 1 -->
+                        <div class="bg-cherry-card border border-cherry-border p-8 rounded-2xl hover:border-cherry-accent/50 transition-all duration-300 group shadow-lg">
+                            <div class="w-14 h-14 bg-cherry-bg border border-cherry-border rounded-xl flex items-center justify-center text-cherry-accent mb-8 group-hover:scale-110 transition-transform">
+                                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"></path></svg>
+                            </div>
+                            <h3 class="font-display text-3xl font-bold text-white mb-3">CherryCAD Pro</h3>
+                            <div class="inline-flex items-center px-4 py-1.5 bg-cherry-bg text-cherry-textMuted border border-cherry-border text-xs font-bold uppercase tracking-wider rounded-full mb-5">
+                                <span class="w-2 h-2 rounded-full bg-yellow-500 mr-2"></span> Beta Phase
+                            </div>
+                            <p class="text-cherry-textMuted text-base leading-relaxed">
+                                An advanced 3D modeling application for dental prosthetics and implant planning. Utilizes Apple's Metal API for seamless manipulation of high-density polygonal meshes natively on iPadOS.
+                            </p>
+                        </div>
+
+                        <!-- App 2 -->
+                        <div class="bg-cherry-card border border-cherry-border p-8 rounded-2xl hover:border-cherry-accent2/50 transition-all duration-300 group shadow-lg">
+                            <div class="w-14 h-14 bg-cherry-bg border border-cherry-border rounded-xl flex items-center justify-center text-cherry-accent2 mb-8 group-hover:scale-110 transition-transform">
+                                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                            </div>
+                            <h3 class="font-display text-3xl font-bold text-white mb-3">SmileSync API</h3>
+                            <div class="inline-flex items-center px-4 py-1.5 bg-cherry-bg text-cherry-textMuted border border-cherry-border text-xs font-bold uppercase tracking-wider rounded-full mb-5">
+                                <span class="w-2 h-2 rounded-full bg-blue-500 mr-2"></span> In Engineering
+                            </div>
+                            <p class="text-cherry-textMuted text-base leading-relaxed">
+                                A proprietary data transmission framework engineered to synchronize massive raw data files from intraoral scanners to mobile devices with zero latency and end-to-end encryption.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Corporate Registry -->
+            <section class="py-24 px-6 border-t border-cherry-border">
+                <div class="max-w-4xl mx-auto">
+                    <div class="mb-10 text-center md:text-left">
+                        <h2 class="font-display text-4xl font-bold text-white mb-2">Corporate Registry</h2>
+                        <p class="text-cherry-textMuted text-base">Verified UK operational data.</p>
+                    </div>
+
+                    <div class="bg-cherry-card border border-cherry-border p-8 md:p-12 rounded-[2rem] relative overflow-hidden shadow-2xl">
+                        <div class="absolute -top-24 -right-24 w-48 h-48 bg-cherry-accent/10 blur-[50px] rounded-full pointer-events-none"></div>
+
+                        <div class="flex flex-col md:flex-row md:items-center justify-between mb-10 pb-8 border-b border-cherry-border relative z-10">
+                            <div>
+                                <p class="text-xs font-bold text-cherry-accent uppercase tracking-widest mb-2">Registered Entity</p>
+                                <h3 class="text-3xl md:text-4xl font-display font-bold text-white uppercase tracking-wider">CHERRY DENTAL DESIGN LIMITED</h3>
+                            </div>
+                            <div class="mt-4 md:mt-0">
+                                <div class="px-5 py-2.5 bg-green-950/40 border border-green-500/30 text-green-400 text-xs font-bold uppercase tracking-widest rounded-full flex items-center">
+                                    <span class="w-2 h-2 bg-green-400 rounded-full mr-2 shadow-[0_0_8px_rgba(74,222,128,0.8)]"></span> Active Status
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 relative z-10">
+                            <div>
+                                <p class="text-xs font-bold text-cherry-textMuted uppercase tracking-widest mb-3">D-U-N-S® Number</p>
+                                <p class="text-xl font-mono text-white font-medium bg-cherry-bg inline-block px-5 py-2.5 border border-cherry-border rounded-xl">219634244</p>
+                            </div>
+                            <div>
+                                <p class="text-xs font-bold text-cherry-textMuted uppercase tracking-widest mb-3">Headquarters Address</p>
+                                <div class="flex items-start">
+                                    <svg class="w-6 h-6 text-cherry-accent mr-4 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                    <p class="text-lg text-white leading-relaxed font-medium">
+                                        12 Bridgford Road West Bridgford<br>
+                                        NOTTINGHAM, NG2 6AB<br>
+                                        United Kingdom
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ==================== SUPPORT VIEW ==================== -->
+        <div id="view-support" class="spa-view pt-12 pb-32 px-6">
+            <div class="max-w-2xl mx-auto">
+                <div class="text-center mb-12">
+                    <h1 class="font-display text-5xl font-bold text-white mb-4">Enterprise Support</h1>
+                    <p class="text-cherry-textMuted text-lg">Contact our engineering operations for B2B beta access and technical inquiries.</p>
+                </div>
+
+                <div class="bg-cherry-card border border-cherry-border p-8 md:p-10 rounded-[2rem] shadow-2xl">
+                    <form action="https://formspree.io/f/YOUR_FORM_ID_HERE" method="POST" class="space-y-6">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-xs font-bold text-cherry-textMuted uppercase tracking-widest mb-2">Representative Name</label>
+                                <input type="text" name="name" required class="form-input" placeholder="Your Name">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-cherry-textMuted uppercase tracking-widest mb-2">Corporate Email</label>
+                                <input type="email" name="email" required class="form-input" placeholder="email@clinic.com">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-cherry-textMuted uppercase tracking-widest mb-2">Request Category</label>
+                            <select name="subject" class="form-input appearance-none">
+                                <option>CherryCAD Pro Beta Access</option>
+                                <option>API Integration Assistance</option>
+                                <option>Business Partnerships</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-cherry-textMuted uppercase tracking-widest mb-2">Message</label>
+                            <textarea name="message" rows="5" required class="form-input resize-none" placeholder="Provide operational context..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-4 bg-gradient-to-r from-cherry-accent to-cherry-accent2 text-white font-bold tracking-widest uppercase rounded-xl hover:opacity-90 transition-opacity shadow-lg">
+                            Submit Request
+                        </button>
+                    </form>
+                </div>
+
+                <div class="mt-12 text-center p-8 bg-cherry-bg border border-cherry-border rounded-[2rem]">
+                    <p class="text-cherry-textMuted text-sm font-bold uppercase tracking-widest mb-2">Direct Comms</p>
+                    <a href="mailto:admin@cherrydentaldesign.click" class="text-cherry-accent hover:text-white transition-colors text-xl md:text-2xl font-display mt-2 inline-block font-bold">admin@cherrydentaldesign.click</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== PRIVACY VIEW ==================== -->
+        <div id="view-privacy" class="spa-view pt-12 pb-32 px-6">
+            <div class="max-w-4xl mx-auto bg-cherry-card border border-cherry-border p-10 md:p-16 rounded-[2rem] shadow-2xl">
+                <h1 class="font-display text-4xl font-bold text-white mb-2">Privacy Protocol</h1>
+                <p class="text-cherry-accent text-xs font-bold tracking-widest uppercase mb-10 pb-8 border-b border-cherry-border">Effective Date: June 15, 2024</p>
+                
+                <div class="space-y-8 text-cherry-textMuted text-base leading-relaxed">
+                    <p><strong>CHERRY DENTAL DESIGN LIMITED</strong> strictly enforces data protection standards, particularly given the sensitive nature of clinical environments. This document details our data handling procedures for our enterprise applications.</p>
+                    
+                    <div>
+                        <h3 class="text-xl font-display font-bold text-white mb-3">1. Diagnostic Collection</h3>
+                        <p>We do not passively extract patient or personal data. Our enterprise CAD applications log anonymized crash reports and engine metrics solely to refine 3D rendering stability and reduce latency.</p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-display font-bold text-white mb-3">2. Information Processing</h3>
+                        <p>Information actively supplied by users through our B2B support terminals or beta registration forms is processed exclusively to deliver technical support and authenticate corporate access.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-display font-bold text-white mb-3">3. UK Data Sovereignty (UK GDPR)</h3>
+                        <p>Operating out of Nottingham, United Kingdom, our protocols align strictly with the UK General Data Protection Regulation (UK GDPR). Corporate clients retain full authority to request audits, modifications, or erasure of their records via our support channels.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== TERMS VIEW ==================== -->
+        <div id="view-terms" class="spa-view pt-12 pb-32 px-6">
+            <div class="max-w-4xl mx-auto bg-cherry-card border border-cherry-border p-10 md:p-16 rounded-[2rem] shadow-2xl">
+                <h1 class="font-display text-4xl font-bold text-white mb-2">Terms of Service</h1>
+                <p class="text-cherry-accent text-xs font-bold tracking-widest uppercase mb-10 pb-8 border-b border-cherry-border">Last Updated: June 15, 2024</p>
+                
+                <div class="space-y-8 text-cherry-textMuted text-base leading-relaxed">
+                    <p>Utilization of software ecosystems, APIs, and digital environments governed by <strong>CHERRY DENTAL DESIGN LIMITED</strong> implies your acceptance of the following operating conditions.</p>
+                    
+                    <div>
+                        <h3 class="text-xl font-display font-bold text-white mb-3">1. Software License (EULA)</h3>
+                        <p>We provide a restricted, non-transferable license to interface with our digital design utilities. Reverse engineering, API misuse, or commercial redistribution of our proprietary code is strictly prohibited.</p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-display font-bold text-white mb-3">2. Pre-Release Constraints</h3>
+                        <p>Systems designated as "Beta" or "In Engineering" are deployed as-is. CHERRY DENTAL DESIGN LIMITED accepts no liability for rendering failures, corporate data corruption, or downtime stemming from beta environment usage.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-display font-bold text-white mb-3">3. Legal Jurisdiction</h3>
+                        <p>These terms are governed exclusively by the laws of England and Wales. Any legal contestations shall be resolved within the courts of the United Kingdom.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-cherry-border bg-cherry-bg px-6 py-12 mt-auto relative z-10">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-sm">
+            <div class="mb-6 md:mb-0 text-center md:text-left">
+                <span class="font-display font-bold text-white uppercase tracking-widest block mb-2 text-lg">CHERRY DENTAL DESIGN LIMITED</span>
+                <span class="text-cherry-textMuted font-mono text-xs">&copy; 2024-2026. All rights reserved.</span>
+            </div>
+            <div class="flex space-x-8">
+                <a href="#privacy" class="text-cherry-textMuted hover:text-white uppercase tracking-widest font-bold transition-colors">Privacy</a>
+                <a href="#terms" class="text-cherry-textMuted hover:text-white uppercase tracking-widest font-bold transition-colors">Terms</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SPA Router Script -->
+    <script>
+        function route() {
+            let hash = window.location.hash || '#home';
+            if (hash === '#' || hash === '') hash = '#home';
+
+            document.querySelectorAll('.spa-view').forEach(view => {
+                view.classList.remove('active');
+            });
+
+            const targetView = document.querySelector('#view-' + hash.substring(1));
+            if (targetView) {
+                targetView.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                document.querySelector('#view-home').classList.add('active');
+                window.location.hash = '#home';
+            }
+        }
+
+        window.addEventListener('hashchange', route);
+        window.addEventListener('DOMContentLoaded', route);
+
+        const btn = document.getElementById('mobileMenuBtn');
+        const menu = document.getElementById('mobileMenu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
